@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "700514769597",
+    "firebase_url": "https://mighty-9fe34.firebaseio.com",
+    "project_id": "mighty-9fe34",
+    "storage_bucket": "mighty-9fe34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700514769597:android:0fe99ef0aadad82e",
+        "android_client_info": {
+          "package_name": "genne.manshin.mighty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "700514769597-14g2j22nlhulr21phbineqptec49013v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZGiXjPOedkAA-gUv6d02pm0BJEC4X1K8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
