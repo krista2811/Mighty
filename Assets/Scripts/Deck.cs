@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Deck {
-    public Dictionary<string, Sprite> Images { get; set; }
     public List<GameObject> Cards { get; set; }
 
     private bool IsShuffle { get; set; }
