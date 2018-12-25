@@ -44,6 +44,6 @@ public class TestingScript : MonoBehaviour {
         cardClass.Images = newImage;
 
         OneCardImage.GetComponent<SpriteRenderer>().sprite 
-                    = cardClass.getImage();
+                    = cardClass.GetImage();
     }
 }

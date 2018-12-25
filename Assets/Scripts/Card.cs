@@ -15,18 +15,22 @@ public class Card {
     public bool Flip(bool isBack) {
         IsBack = isBack;
         if (IsBack) {
-            setImageShow(Images["back"]);
+            SetImageShow(Images["back"]);
         } else {
-            setImageShow(Images["front"]);
+            SetImageShow(Images["front"]);
         }
         return IsBack;
     }
 
-    public Sprite getImage() {
+    public Sprite GetImage() {
         return imageShow;
     }
 
-    void setImageShow(Sprite image) {
+    public void SetInitShow() {
+        Flip(true);
+    }
+
+    void SetImageShow(Sprite image) {
         imageShow = image;
     }
 }
