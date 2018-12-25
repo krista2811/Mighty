@@ -541,6 +541,8 @@ GameObject:
   - component: {fileID: 327482921}
   - component: {fileID: 327482922}
   - component: {fileID: 327482924}
+  - component: {fileID: 327482925}
+  - component: {fileID: 327482923}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -632,6 +634,17 @@ MonoBehaviour:
   BackSprite: {fileID: 21300000, guid: f91d2f7977d3d4f208066372227a3bd6, type: 3}
   BackWhiteSprite: {fileID: 21300000, guid: eb6187824eb3948e888cd04ff7bcec7d, type: 3}
   IsBlack: 0
+--- !u!114 &327482923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 327482920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d76e93bf69d594babb68f04f64b37d09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &327482924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,6 +659,17 @@ MonoBehaviour:
   OneCardImage: {fileID: 2131400439}
   flip: 0
   white: 0
+--- !u!114 &327482925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 327482920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfef4e9003a784150b318efb901e56da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,7 +816,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 964719041}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -462, y: -325, z: 7}
+  m_LocalPosition: {x: -462, y: -325, z: 3}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 97267353}

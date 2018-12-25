@@ -18,4 +18,8 @@ public class Hand {
     public int GetCardCount() {
         return CardObjects.Count;
     }
+
+    public List<GameObject> GetCardObjects() {
+        return CardObjects;
+    }
 }
