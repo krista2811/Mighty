@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Card : MonoBehaviour {
+public class Card {
     public Dictionary<string, Sprite> Images { get; set; }
-    public Sprite Front { get; set; }
-    public Sprite Back { get; set; }
     public Suit CardSuit { get; set; }
     public Rank CardRank { get; set; }
     public Job CardJob { get; set; }
@@ -14,22 +12,7 @@ public class Card : MonoBehaviour {
 
     Sprite imageShow;
 
-    // Use this for initialization
-    void Start () {
-        try {
-            setImageShow(Images["back"]);
-        } catch (KeyNotFoundException e) {
-            Debug.Log(e);
-        }
-
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    bool Flip(bool isBack) {
+    public bool Flip(bool isBack) {
         IsBack = isBack;
         if (IsBack) {
             setImageShow(Images["back"]);
@@ -39,7 +22,7 @@ public class Card : MonoBehaviour {
         return IsBack;
     }
 
-    Sprite getImage() {
+    public Sprite getImage() {
         return imageShow;
     }
 
