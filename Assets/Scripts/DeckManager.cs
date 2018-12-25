@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeckManager : MonoBehaviour {
+public class DeckManager : MonoBehaviour
+{
     public Sprite[] SapSprites;
     public Sprite[] ClSprites;
     public Sprite[] HaSprites;
     public Sprite[] DaSprites;
+
+    public Sprite JokerSprite;
 
     public Sprite BackSprite;
     public Sprite BackWhiteSprite;
@@ -15,41 +18,62 @@ public class DeckManager : MonoBehaviour {
 
     public bool IsBlack;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    CardFactory cardFactory;
 
-    Deck CreateDeck() {
-        return null;
+    // Use this for initialization
+    void Start()
+    {
+        Sprite[][] CardSprites = null;
+
+        cardFactory = new CardFactory
+        {
+            SuitSprites = CardSprites,
+            JokerSprite = JokerSprite,
+            BackSprite = BackSprite,
+            BackWhiteSprite = BackWhiteSprite // not needed. need to be changed later
+        };
     }
 
-    public void ResetDeck() {
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    Deck CreateDeck()
+    {
+        List<GameObject> CardObjects = cardFactory.GenerateAllCards();
+        return new Deck
+        {
+            Cards = CardObjects
+        };
+    }
+
+    public void ResetDeck()
+    {
         MyDeck = CreateDeck();
     }
 
-    public void ShuffleDeck() {
+    public void ShuffleDeck()
+    {
         MyDeck.Shuffle();
     }
 
-    public GameObject Draw() {
+    public GameObject Draw()
+    {
         return MyDeck.Pop();
     }
 
 
 }
 
-class CardFactory {
-    static Sprite[][] SuitSprites { get; set; }
-    static Sprite JokerSprite { get; set; }
+class CardFactory
+{
+    public Sprite[][] SuitSprites { get; set; }
+    public Sprite JokerSprite { get; set; }
 
-    static Sprite BackSprite { get; set; }
-    static Sprite BackWhiteSprite { get; set; }
+    public Sprite BackSprite { get; set; }
+    public Sprite BackWhiteSprite { get; set; }
 
     readonly static Rank[] SuitRanks = {
         Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE,
@@ -80,14 +104,37 @@ class CardFactory {
         };
     }
 
-    void AddOneSuit(Suit suit, List<GameObject> cardObjects) 
+    void AddOneSuit(Suit suit, List<GameObject> cardObjects)
     {
-        for (int i = 0; i < 13; i++) 
+        for (int i = 0; i < 13; i++)
         {
             int suitIndex = (int)suit;
             cardObjects.Add(CreateOneCard(
                 SuitSprites[suitIndex][i], BackSprite, suit, SuitRanks[i], Job.NONE, SuitPoints[i]));
         }
+    }
+
+    public List<GameObject> GenerateAllCards()
+    {
+        List<GameObject> NewCardDeck = new List<GameObject>();
+        AddOneSuit(Suit.SPADE, NewCardDeck);
+        AddOneSuit(Suit.DIAMOND, NewCardDeck);
+        AddOneSuit(Suit.HEART, NewCardDeck);
+        AddOneSuit(Suit.CLOVER, NewCardDeck);
+
+        GameObject JokerObject = CreateOneCard(JokerSprite, BackSprite, Suit.NONE, Rank.ACE, Job.JOKER, -1);
+        NewCardDeck.Add(JokerObject);
+
+        // set Mighty and Joker Call
+        ChangeJob(NewCardDeck, 12, Job.MIGHTY);
+        ChangeJob(NewCardDeck, 40, Job.JOKER_CALL);
+
+        return null;
+    }
+
+    void ChangeJob(List<GameObject> cardObjects, int cardIndex, Job job)
+    {
+        cardObjects[cardIndex].GetComponent<CardManager>().CardClass.CardJob = job;
     }
 
     GameObject CreateOneCard(
