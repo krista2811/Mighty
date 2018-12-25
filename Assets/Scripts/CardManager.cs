@@ -7,7 +7,7 @@ using UnityEngine;
 */
 public class CardManager : MonoBehaviour {
     public Card CardClass { get; set; }
-    public GameObject CardObject { get; set; }
+    public GameObject CardImageObject { get; set; }
 
 	// Use this for initialization
 	void Start () {
@@ -25,7 +25,7 @@ public class CardManager : MonoBehaviour {
     }
 
     void SetImageToCardObject() {
-        CardObject.GetComponent<SpriteRenderer>().sprite
+        CardImageObject.GetComponent<SpriteRenderer>().sprite
                   = CardClass.GetImage();
     }
 }

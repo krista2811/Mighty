@@ -2,37 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Deck : MonoBehaviour {
+public class Deck {
     public Dictionary<string, Sprite> Images { get; set; }
-    public List<Card> Cards { get; set; }
+    public List<GameObject> Cards { get; set; }
 
-    private bool isShuffle;
-
-	// Use this for initialization
-	void Start () {
-        isShuffle = false;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private bool IsShuffle { get; set; }
 
     private int GetDeckSize() {
         return Cards.Count;
     }
 
     public void Shuffle() {
-        ShuffleList<Card>(Cards);
+        ShuffleList<GameObject>(Cards);
     }
 
-    private void Reset()
-    {
-        // TODO: make 53 cards.
+    public GameObject Pop() {
+        // Used in GameManager Draw
+        GameObject Card = Cards[0];
+        Cards.RemoveAt(0);
+        return Card;
     }
 
     private static void ShuffleList<T>(List<T> list)
     {
+        // helper function
         int random1;
         int random2;
 
