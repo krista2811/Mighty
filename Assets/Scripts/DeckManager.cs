@@ -42,8 +42,7 @@ public class DeckManager : MonoBehaviour
             {
                 SuitSprites = CardSprites,
                 JokerSprite = JokerSprite,
-                BackSprite = BackSprite,
-                BackWhiteSprite = BackWhiteSprite // not needed. need to be changed later
+                BackSprite = BackSprite
             };
             GetDeckManager = this;
         }
@@ -57,7 +56,11 @@ public class DeckManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (IsBlack) {
+            cardFactory.BackSprite = BackWhiteSprite;
+        } else {
+            cardFactory.BackSprite = BackSprite;
+        }
     }
 
     Deck CreateDeck()
@@ -102,7 +105,6 @@ class CardFactory
     public Sprite JokerSprite { get; set; }
 
     public Sprite BackSprite { get; set; }
-    public Sprite BackWhiteSprite { get; set; }
 
     readonly static Rank[] SuitRanks = {
         Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE,
