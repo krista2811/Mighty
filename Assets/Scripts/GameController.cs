@@ -4,8 +4,19 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    public static GameController GetGameController;
+
+    private void Awake()
+    {
+        if (GetGameController == null) {
+            GetGameController = this;
+        } else if (GetGameController != this) {
+            Destroy(gameObject);
+        }
+    }
+
+    // Use this for initialization
+    void Start () {
 	}
 	
 	// Update is called once per frame
