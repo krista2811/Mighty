@@ -8,7 +8,7 @@ public class Card {
     public Rank CardRank { get; set; }
     public Job CardJob { get; set; }
     public bool IsBack { get; set; }
-    public int Point { get; set; }
+    public float Point { get; set; }
 
     Sprite imageShow;
 
