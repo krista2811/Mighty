@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Deck {
     public List<GameObject> Cards { get; set; }
-
-    private bool IsShuffle { get; set; }
-
-    private int GetDeckSize() {
+    
+    public int GetDeckSize() {
         return Cards.Count;
     }
 

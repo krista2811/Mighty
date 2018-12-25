@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DeckManager : MonoBehaviour
 {
+    public static DeckManager GetDeckManager;
+
     public Sprite[] SapSprites;
     public Sprite[] ClSprites;
     public Sprite[] HaSprites;
@@ -23,15 +25,33 @@ public class DeckManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Sprite[][] CardSprites = null;
+    }
 
-        cardFactory = new CardFactory
-        {
-            SuitSprites = CardSprites,
-            JokerSprite = JokerSprite,
-            BackSprite = BackSprite,
-            BackWhiteSprite = BackWhiteSprite // not needed. need to be changed later
-        };
+    void Awake()
+    {
+        //If we don't currently have a game control...
+        if (GetDeckManager == null) {
+            Sprite[][] CardSprites = {
+                SapSprites,
+                DaSprites,
+                HaSprites,
+                ClSprites
+            };
+
+            cardFactory = new CardFactory
+            {
+                SuitSprites = CardSprites,
+                JokerSprite = JokerSprite,
+                BackSprite = BackSprite,
+                BackWhiteSprite = BackWhiteSprite // not needed. need to be changed later
+            };
+            GetDeckManager = this;
+        }
+        //...set this one to be it...
+        //...otherwise...
+        else if (GetDeckManager != this)
+            //...destroy this one because it is a duplicate.
+            Destroy(gameObject);
     }
 
     // Update is called once per frame
@@ -42,7 +62,9 @@ public class DeckManager : MonoBehaviour
 
     Deck CreateDeck()
     {
-        List<GameObject> CardObjects = cardFactory.GenerateAllCards();
+        List<GameObject> CardObjects;
+        CardObjects = cardFactory.GenerateAllCards();
+        Debug.Log(CardObjects.Count);
         return new Deck
         {
             Cards = CardObjects
@@ -52,6 +74,7 @@ public class DeckManager : MonoBehaviour
     public void ResetDeck()
     {
         MyDeck = CreateDeck();
+        Debug.Log(MyDeck.GetDeckSize());
     }
 
     public void ShuffleDeck()
@@ -61,7 +84,9 @@ public class DeckManager : MonoBehaviour
 
     public GameObject Draw()
     {
-        return MyDeck.Pop();
+        GameObject DrawedCard = MyDeck.Pop();
+        DrawedCard.SetActive(true);
+        return DrawedCard;
     }
 
 
@@ -109,8 +134,10 @@ class CardFactory
         for (int i = 0; i < 13; i++)
         {
             int suitIndex = (int)suit;
-            cardObjects.Add(CreateOneCard(
-                SuitSprites[suitIndex][i], BackSprite, suit, SuitRanks[i], Job.NONE, SuitPoints[i]));
+            GameObject OneCard = CreateOneCard(
+                SuitSprites[suitIndex][i], BackSprite, suit, SuitRanks[i], Job.NONE, SuitPoints[i]);
+            OneCard.SetActive(false);
+            cardObjects.Add(OneCard);
         }
     }
 
@@ -123,13 +150,14 @@ class CardFactory
         AddOneSuit(Suit.CLOVER, NewCardDeck);
 
         GameObject JokerObject = CreateOneCard(JokerSprite, BackSprite, Suit.NONE, Rank.ACE, Job.JOKER, -1);
+        JokerObject.SetActive(false);
         NewCardDeck.Add(JokerObject);
 
         // set Mighty and Joker Call
         ChangeJob(NewCardDeck, 12, Job.MIGHTY);
         ChangeJob(NewCardDeck, 40, Job.JOKER_CALL);
 
-        return null;
+        return NewCardDeck;
     }
 
     void ChangeJob(List<GameObject> cardObjects, int cardIndex, Job job)
@@ -144,6 +172,7 @@ class CardFactory
 
         Card OneCardClass = CardClassInit(Front, Back, suit, rank, job, point);
         CardManager OneCardManager = OneCard.AddComponent<CardManager>();
+        OneCard.AddComponent<SpriteRenderer>();
         OneCardManager.CardClass = OneCardClass;
         OneCardManager.CardImageObject = OneCard;
 

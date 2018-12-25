@@ -36,10 +36,10 @@ public class Card {
 }
 
 public enum Suit {
-    CLOVER,
-    HEART,
-    DIAMOND,
     SPADE,
+    DIAMOND,
+    HEART,
+    CLOVER,
     NONE
 }
 
