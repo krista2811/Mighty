@@ -84,6 +84,10 @@ public class DeckManager : MonoBehaviour
 
     public GameObject Draw()
     {
+        if (MyDeck.GetDeckSize() <= 0) {
+            Debug.LogError("Index over");
+            return null;
+        }
         GameObject DrawedCard = MyDeck.Pop();
         DrawedCard.SetActive(true);
         return DrawedCard;
