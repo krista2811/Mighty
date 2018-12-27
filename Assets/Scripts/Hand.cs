@@ -36,4 +36,17 @@ public class Hand {
             cardObject.GetComponent<CardManager>().FlipCard(isBack);
         }
     }
+
+    public void BlockAll() {
+        foreach (GameObject cardObject in CardObjects) {
+            cardObject.GetComponent<CardManager>().BlockTrigger();
+        }
+    }
+
+    public void AllowAll() {
+        foreach (GameObject cardObject in CardObjects)
+        {
+            cardObject.GetComponent<CardManager>().AllowTrigger();
+        }
+    }
 }

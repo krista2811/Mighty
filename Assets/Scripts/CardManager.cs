@@ -8,8 +8,9 @@ using BasicCard;
 public class CardManager : MonoBehaviour {
     public Card CardClass { get; set; }
     public GameObject CardImageObject { get; set; }
-    public Vector3 PositionDefault { get; set; }
-    public Vector3 PositionHovered { get; set; }
+
+    public Transform DefaultTransform { get; set; }
+    public Transform HoverTransform { get; set; }
 
 	// Use this for initialization
 	void Start () {
@@ -18,11 +19,15 @@ public class CardManager : MonoBehaviour {
 	}
 
     public void SetPositionHovered() {
+        if (HoverTransform == null) {
+            HoverTransform = CardImageObject.transform;
+        }
+
         Vector3 newHoverVector = new Vector3();
-        newHoverVector.x = PositionDefault.x;
-        newHoverVector.y = PositionDefault.y + 0.4f;
-        newHoverVector.z = PositionDefault.z;
-        PositionHovered = newHoverVector;
+        newHoverVector.x = DefaultTransform.position.x;
+        newHoverVector.y = DefaultTransform.position.y + 0.4f;
+        newHoverVector.z = DefaultTransform.position.z;
+        HoverTransform.position = newHoverVector;
     }
 	
 	// Update is called once per frame
@@ -62,12 +67,12 @@ public class CardManager : MonoBehaviour {
 
     void MakeUp()
     {
-        CardImageObject.GetComponent<Transform>().localPosition = PositionHovered;
+        CardImageObject.transform.position = HoverTransform.position;
     }
 
     void MakeDown()
     {
-        CardImageObject.GetComponent<Transform>().localPosition = PositionDefault;
+        CardImageObject.transform.position = DefaultTransform.position;
     }
 
     private void OnMouseEnter()

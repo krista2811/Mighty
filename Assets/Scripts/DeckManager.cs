@@ -69,7 +69,6 @@ public class DeckManager : MonoBehaviour
     {
         List<GameObject> CardObjects;
         CardObjects = cardFactory.GenerateAllCards();
-        Debug.Log(CardObjects.Count);
         return new Deck
         {
             Cards = CardObjects
@@ -79,7 +78,6 @@ public class DeckManager : MonoBehaviour
     public void ResetDeck()
     {
         MyDeck = CreateDeck();
-        Debug.Log(MyDeck.GetDeckSize());
     }
 
     public void ShuffleDeck()
@@ -183,7 +181,7 @@ class CardFactory
         OneCard.AddComponent<SpriteRenderer>();
         OneCardManager.CardClass = OneCardClass;
         OneCardManager.CardImageObject = OneCard;
-        OneCardManager.PositionDefault = OneCard.GetComponent<Transform>().localPosition;
+        OneCardManager.DefaultTransform = OneCard.transform;
         OneCardManager.SetPositionHovered();
 
         // set Collider2D

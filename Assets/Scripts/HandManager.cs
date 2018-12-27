@@ -12,7 +12,7 @@ public class HandManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         SpawnCards();
-        IsBack = false;
+        //IsBack = false;
 	}
 	
 	// Update is called once per frame
@@ -36,16 +36,19 @@ public class HandManager : MonoBehaviour {
         for (int i = 0; i < HandClass.GetCardCount(); i++) 
         {
             // Set component position!
-            Vector3 childPosition = new Vector3();
-            childPosition.x = parentPosition.x - 5 + spawnDistance * i;
-            childPosition.y = parentPosition.y;
-            childPosition.z = parentPosition.z + 0.01f * i;
-            cardObjects[i].GetComponent<Transform>().position = childPosition;
-            cardObjects[i].GetComponent<Transform>().rotation = parentRotation;
-            cardObjects[i].GetComponent<Transform>().localScale = parentScale;
+            cardObjects[i].transform.parent = HandObject.transform;
+            cardObjects[i].transform.rotation = new Quaternion();
+            cardObjects[i].transform.localScale = new Vector3(1, 1, 1);
+
+            Vector3 translate = new Vector3();
+            translate.x = -(Width / 2) + spawnDistance * i;
+            translate.y = 0;
+            translate.z = 0.01f * i;
+
+            cardObjects[i].transform.localPosition = translate;
 
             // Set Hover
-            cardObjects[i].GetComponent<CardManager>().PositionDefault = childPosition;
+            cardObjects[i].GetComponent<CardManager>().DefaultTransform = cardObjects[i].transform;
             cardObjects[i].GetComponent<CardManager>().SetPositionHovered();
 
             // flip card!
@@ -72,6 +75,14 @@ public class HandManager : MonoBehaviour {
     {
         HandClass.AddCard(oneCard);
         SpawnCards();
+    }
+
+    public void BlockAllTrigger() {
+        HandClass.BlockAll();
+    }
+
+    public void AllowAllTrigger() {
+        HandClass.AllowAll();
     }
 
     public void SetCardOrientation()
