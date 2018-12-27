@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using BasicCard;
 
 public class DeckManager : MonoBehaviour
 {
@@ -182,6 +183,8 @@ class CardFactory
         OneCard.AddComponent<SpriteRenderer>();
         OneCardManager.CardClass = OneCardClass;
         OneCardManager.CardImageObject = OneCard;
+        OneCardManager.PositionDefault = OneCard.GetComponent<Transform>().localPosition;
+        OneCardManager.SetPositionHovered();
 
         // set Collider2D
         BoxCollider2D collider = OneCard.AddComponent<BoxCollider2D>();

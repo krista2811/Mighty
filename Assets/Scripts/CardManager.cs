@@ -1,24 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using BasicCard;
 /*
 * This class is for Generating Card, Managing card. 
 */
 public class CardManager : MonoBehaviour {
     public Card CardClass { get; set; }
     public GameObject CardImageObject { get; set; }
+    public Vector3 PositionDefault { get; set; }
+    public Vector3 PositionHovered { get; set; }
 
 	// Use this for initialization
 	void Start () {
         CardClass.SetInitShow();  // Initial card is "BACK"
         SetImageToCardObject();
 	}
+
+    public void SetPositionHovered() {
+        Vector3 newHoverVector = new Vector3();
+        newHoverVector.x = PositionDefault.x;
+        newHoverVector.y = PositionDefault.y + 0.4f;
+        newHoverVector.z = PositionDefault.z;
+        PositionHovered = newHoverVector;
+    }
 	
 	// Update is called once per frame
 	void Update () {
         SetImageToCardObject();
-	}
+        if (CardClass.IsHover || CardClass.IsClicked)
+        {
+            MakeUp();
+        }
+        else
+        {
+            MakeDown();
+        }
+    }
 
     public void FlipCard(bool isFlip) {
         CardClass.Flip(isFlip);
@@ -33,14 +51,37 @@ public class CardManager : MonoBehaviour {
         CardClass.IsClicked = !CardClass.IsClicked;
     }
 
-    private void OnMouseDown()
-    {
-        CardClass.Flip(true);
+    public void BlockTrigger() {
+        CardImageObject.GetComponent<BoxCollider2D>().isTrigger = false;
     }
 
-    private void OnMouseUp()
+    public void AllowTrigger() {
+        CardImageObject.GetComponent<BoxCollider2D>().isTrigger = true;
+    }
+
+    void MakeUp()
     {
-        CardClass.Flip(false);
+        CardImageObject.GetComponent<Transform>().localPosition = PositionHovered;
+    }
+
+    void MakeDown()
+    {
+        CardImageObject.GetComponent<Transform>().localPosition = PositionDefault;
+    }
+
+    private void OnMouseEnter()
+    {
+        CardClass.IsHover = true;
+    }
+
+    private void OnMouseExit()
+    {
+        CardClass.IsHover = false;
+    }
+
+    private void OnMouseDown()
+    {
+        ToggleCardIsClicked();
     }
 
 }

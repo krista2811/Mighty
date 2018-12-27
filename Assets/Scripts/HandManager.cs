@@ -37,6 +37,8 @@ public class HandManager : MonoBehaviour {
             childPosition.y = parentPosition.y;
             childPosition.z = parentPosition.z + 0.01f * i;
             cardObjects[i].GetComponent<Transform>().position = childPosition;
+            cardObjects[i].GetComponent<CardManager>().PositionDefault = childPosition;
+            cardObjects[i].GetComponent<CardManager>().SetPositionHovered();
             cardObjects[i].GetComponent<CardManager>().FlipCard(IsBack);
         }
     }
