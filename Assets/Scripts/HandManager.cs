@@ -7,7 +7,7 @@ public class HandManager : MonoBehaviour {
     public GameObject HandObject { get; set; }
 
     public float Scale { get; set; }
-    public float Width = 10;
+    public float Width { get; set; }
     public bool IsBack { get; set; }
 	// Use this for initialization
 	void Start () {
@@ -22,6 +22,9 @@ public class HandManager : MonoBehaviour {
 
     void SpawnCards() {
         Vector3 parentPosition = HandObject.GetComponent<Transform>().position;
+        Quaternion parentRotation = HandObject.GetComponent<Transform>().rotation;
+        Vector3 parentScale = HandObject.GetComponent<Transform>().localScale;
+
         int count = HandClass.GetCardCount();
         if (count <= 0) {
             return;
@@ -32,11 +35,16 @@ public class HandManager : MonoBehaviour {
 
         for (int i = 0; i < HandClass.GetCardCount(); i++) 
         {
+            // Set component position!
             Vector3 childPosition = new Vector3();
             childPosition.x = parentPosition.x - 5 + spawnDistance * i;
             childPosition.y = parentPosition.y;
             childPosition.z = parentPosition.z + 0.01f * i;
             cardObjects[i].GetComponent<Transform>().position = childPosition;
+            cardObjects[i].GetComponent<Transform>().rotation = parentRotation;
+            cardObjects[i].GetComponent<Transform>().localScale = parentScale;
+
+            // Set Hover
             cardObjects[i].GetComponent<CardManager>().PositionDefault = childPosition;
             cardObjects[i].GetComponent<CardManager>().SetPositionHovered();
 

@@ -13,7 +13,7 @@ public class CardManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //CardClass.SetInitShow();  // Initial card is "BACK"
+        CardClass.SetInitShow();  // Initial card is "BACK"
         SetImageToCardObject();
 	}
 
@@ -44,8 +44,6 @@ public class CardManager : MonoBehaviour {
     }
 
     void SetImageToCardObject() {
-        Debug.Log(CardClass.GetImage());
-        Debug.Log(CardClass.CardRank);
         CardImageObject.GetComponent<SpriteRenderer>().sprite
                   = CardClass.GetImage();
     }
