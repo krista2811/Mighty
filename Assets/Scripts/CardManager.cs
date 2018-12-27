@@ -28,4 +28,19 @@ public class CardManager : MonoBehaviour {
         CardImageObject.GetComponent<SpriteRenderer>().sprite
                   = CardClass.GetImage();
     }
+
+    public void ToggleCardIsClicked() {
+        CardClass.IsClicked = !CardClass.IsClicked;
+    }
+
+    private void OnMouseDown()
+    {
+        CardClass.Flip(true);
+    }
+
+    private void OnMouseUp()
+    {
+        CardClass.Flip(false);
+    }
+
 }

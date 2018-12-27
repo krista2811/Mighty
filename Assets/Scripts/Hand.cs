@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class Hand {
     List<GameObject> CardObjects;
-    bool IsBack;
 
-    public Hand(bool isBack) {
-        IsBack = isBack;
+    public Hand() {
+        CardObjects = new List<GameObject>();
     }
 
     public void AddCard(GameObject OneCard) {
-        OneCard.GetComponent<CardManager>().FlipCard(IsBack);
         CardObjects.Add(OneCard);
+    }
+
+    public GameObject PopCard() {
+        return RemoveCardAt(0);
+    }
+
+    public GameObject RemoveCardAt(int index) {
+        GameObject oneCard = CardObjects[index];
+        CardObjects.RemoveAt(index);
+        return oneCard;
     }
 
     public int GetCardCount() {

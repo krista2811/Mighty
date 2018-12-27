@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DeckManager : MonoBehaviour
 {
@@ -182,6 +183,15 @@ class CardFactory
         OneCardManager.CardClass = OneCardClass;
         OneCardManager.CardImageObject = OneCard;
 
+        // set Collider2D
+        BoxCollider2D collider = OneCard.AddComponent<BoxCollider2D>();
+        collider.isTrigger = true;
+        collider.size = new Vector2(1.57f, 2.4f);
+        collider.offset = new Vector2(0, 0.006f);
+
+        // set Event Trigger in CardManager!!!
+
         return OneCard;
     }
+
 }
