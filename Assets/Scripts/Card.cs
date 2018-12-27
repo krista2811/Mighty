@@ -33,6 +33,7 @@ namespace BasicCard {
             }
             else
             {
+                int rank = (int)CardRank;
                 SetImageShow(Images["front"]);
             }
             return IsBack;
@@ -45,7 +46,7 @@ namespace BasicCard {
 
         public void SetInitShow()
         {
-            Flip(true);
+            Flip(IsBack);
         }
 
         void SetImageShow(Sprite image)

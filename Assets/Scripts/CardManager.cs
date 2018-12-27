@@ -13,7 +13,7 @@ public class CardManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        CardClass.SetInitShow();  // Initial card is "BACK"
+        //CardClass.SetInitShow();  // Initial card is "BACK"
         SetImageToCardObject();
 	}
 
@@ -27,7 +27,7 @@ public class CardManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        SetImageToCardObject();
+        //SetImageToCardObject();
         if (CardClass.IsHover || CardClass.IsClicked)
         {
             MakeUp();
@@ -40,9 +40,12 @@ public class CardManager : MonoBehaviour {
 
     public void FlipCard(bool isFlip) {
         CardClass.Flip(isFlip);
+        SetImageToCardObject();
     }
 
     void SetImageToCardObject() {
+        Debug.Log(CardClass.GetImage());
+        Debug.Log(CardClass.CardRank);
         CardImageObject.GetComponent<SpriteRenderer>().sprite
                   = CardClass.GetImage();
     }

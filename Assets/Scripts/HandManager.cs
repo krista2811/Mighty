@@ -39,6 +39,9 @@ public class HandManager : MonoBehaviour {
             cardObjects[i].GetComponent<Transform>().position = childPosition;
             cardObjects[i].GetComponent<CardManager>().PositionDefault = childPosition;
             cardObjects[i].GetComponent<CardManager>().SetPositionHovered();
+
+            // flip card!
+            Debug.Log(IsBack);
             cardObjects[i].GetComponent<CardManager>().FlipCard(IsBack);
         }
     }
@@ -61,5 +64,10 @@ public class HandManager : MonoBehaviour {
     {
         HandClass.AddCard(oneCard);
         SpawnCards();
+    }
+
+    public void SetCardOrientation()
+    {
+        HandClass.FlipAll(IsBack);
     }
 }

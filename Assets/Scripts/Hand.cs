@@ -30,4 +30,10 @@ public class Hand {
     public List<GameObject> GetCardObjects() {
         return CardObjects;
     }
+
+    public void FlipAll(bool isBack) {
+        foreach (GameObject cardObject in CardObjects) {
+            cardObject.GetComponent<CardManager>().FlipCard(isBack);
+        }
+    }
 }

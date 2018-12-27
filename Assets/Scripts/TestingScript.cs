@@ -21,6 +21,7 @@ public class TestingScript : MonoBehaviour {
         handManager.HandClass = handClass;
         handManager.HandObject = HandObject;
         handManager.IsBack = false;
+        handManager.SetCardOrientation();
     }
 	
 	// Update is called once per frame
@@ -40,8 +41,8 @@ public class TestingScript : MonoBehaviour {
     public void GenerateDeck() {
         DeckManager.GetDeckManager.ResetDeck();
         OneCardImage.SetActive(false);
-        GameObject CardObject = DeckManager.GetDeckManager.Draw();
-        OneCardImage = CardObject.gameObject;
+        //GameObject CardObject = DeckManager.GetDeckManager.Draw();
+        //OneCardImage = CardObject.gameObject;
     }
 
     public void DrawCard() {
