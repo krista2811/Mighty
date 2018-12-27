@@ -5,6 +5,7 @@ using UnityEngine;
 public class TestingScript : MonoBehaviour {
 
     public GameObject OneCardImage;
+    public GameObject HandObject;
 
     public bool flip;
     public bool white;
@@ -14,15 +15,26 @@ public class TestingScript : MonoBehaviour {
         //Debug.Log(DeckManager.GetDeckManager.CreateDeck());
         //deck = DeckManager.GetDeckManager.CreateDeck();
         //OneCardImage = deck.Pop();
+
+        Hand handClass = new Hand();
+        HandManager handManager = HandObject.AddComponent<HandManager>();
+        handManager.HandClass = handClass;
+        handManager.HandObject = HandObject;
+        handManager.IsBack = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        try {
-            OneCardImage.GetComponent<CardManager>().FlipCard(flip);
-        } catch(UnityException e) {
+        //try {
+        //    OneCardImage.GetComponent<CardManager>().FlipCard(flip);
+        //} catch(UnityException e) {
 
-        }
+        //}
+    }
+
+    public void DrawCardToMyHand() {
+        GameObject oneCardObject = DeckManager.GetDeckManager.Draw();
+        HandObject.GetComponent<HandManager>().AddCard(oneCardObject);
     }
 
     public void GenerateDeck() {

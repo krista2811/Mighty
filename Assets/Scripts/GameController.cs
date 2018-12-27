@@ -24,3 +24,8 @@ public class GameController : MonoBehaviour {
 		
 	}
 }
+
+
+class HandFactory {
+
+}

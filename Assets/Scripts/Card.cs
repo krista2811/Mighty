@@ -9,8 +9,14 @@ public class Card {
     public Job CardJob { get; set; }
     public bool IsBack { get; set; }
     public float Point { get; set; }
+    
+    public bool IsClicked { get; set; }
 
     Sprite imageShow;
+
+    public Card() {
+        IsClicked = false;
+    }
 
     public bool Flip(bool isBack) {
         IsBack = isBack;
