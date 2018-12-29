@@ -9,6 +9,9 @@ public class HandManager : MonoBehaviour {
     public float Scale { get; set; }
     public float Width { get; set; }
     public bool IsBack { get; set; }
+
+    public static GameObject SelectedCard { get; set; }
+
 	// Use this for initialization
 	void Start () {
         SpawnCards();
@@ -20,6 +23,15 @@ public class HandManager : MonoBehaviour {
         //SpawnCards();
     }
 
+    public void SetAllDown() {
+        List<GameObject> cardObjects = HandClass.GetCardObjects();
+
+        foreach (GameObject cardObject in cardObjects)
+        {
+            cardObject.GetComponent<CardManager>().SetDown();
+        }
+    }
+
     void SpawnCards() {
         Vector3 parentPosition = HandObject.GetComponent<Transform>().position;
         Quaternion parentRotation = HandObject.GetComponent<Transform>().rotation;
@@ -29,7 +41,7 @@ public class HandManager : MonoBehaviour {
         if (count <= 0) {
             return;
         }
-        float spawnDistance = Width / count;
+        float spawnDistance = Width * count;
         Debug.Log(spawnDistance);
 
         List<GameObject> cardObjects = HandClass.GetCardObjects();
@@ -42,19 +54,20 @@ public class HandManager : MonoBehaviour {
             cardObjects[i].transform.localScale = new Vector3(1, 1, 1);
 
             Vector3 translate = new Vector3(
-                -(Width / 2) + (spawnDistance * i),
+                - (spawnDistance / 2) + (Width * i),
                 0,
-                0.01f * i
+                1 - 0.01f * i
             );
 
             cardObjects[i].transform.localPosition = translate;
             
             // Set Hover
-            cardObjects[i].GetComponent<CardManager>().DefaultTransform = cardObjects[i].transform;
+            cardObjects[i].GetComponent<CardManager>().DefaultPosition = cardObjects[i].transform.localPosition;
+            cardObjects[i].GetComponent<CardManager>().HoverPosition = cardObjects[i].transform.localPosition;
             cardObjects[i].GetComponent<CardManager>().SetPositionHovered();
 
+
             // flip card!
-            Debug.Log(IsBack);
             cardObjects[i].GetComponent<CardManager>().FlipCard(IsBack);
         }
     }
@@ -73,11 +86,16 @@ public class HandManager : MonoBehaviour {
         oneCard.GetComponent<Transform>().localPosition = position;
     }
 
-    public void AddCard(GameObject oneCard)
+    public void AddCard(GameObject oneCard, bool isTrigger)
     {
-        Debug.Log("ASDF");
+        oneCard.GetComponent<CardManager>().GetHandManager = gameObject.GetComponent<HandManager>();
         HandClass.AddCard(oneCard);
         SpawnCards();
+        if (isTrigger) {
+            AllowAllTrigger();
+        } else {
+            BlockAllTrigger();
+        }
     }
 
     public void BlockAllTrigger() {
@@ -91,5 +109,10 @@ public class HandManager : MonoBehaviour {
     public void SetCardOrientation()
     {
         HandClass.FlipAll(IsBack);
+    }
+
+    public void OneCardClicked() {
+        // callback function in One Card Click!
+        SetAllDown();
     }
 }

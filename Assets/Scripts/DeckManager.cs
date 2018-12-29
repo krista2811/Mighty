@@ -181,7 +181,8 @@ class CardFactory
         OneCard.AddComponent<SpriteRenderer>();
         OneCardManager.CardClass = OneCardClass;
         OneCardManager.CardImageObject = OneCard;
-        OneCardManager.DefaultTransform = OneCard.transform;
+        OneCardManager.DefaultPosition = OneCard.transform.localPosition;
+        OneCardManager.HoverPosition = OneCard.transform.localPosition;
         OneCardManager.SetPositionHovered();
 
         // set Collider2D

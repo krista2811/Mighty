@@ -35,7 +35,7 @@ public class TestingScript : MonoBehaviour {
 
     public void DrawCardToMyHand() {
         GameObject oneCardObject = DeckManager.GetDeckManager.Draw();
-        HandObject.GetComponent<HandManager>().AddCard(oneCardObject);
+        HandObject.GetComponent<HandManager>().AddCard(oneCardObject, true);
     }
 
     public void GenerateDeck() {

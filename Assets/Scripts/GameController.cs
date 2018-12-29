@@ -56,9 +56,11 @@ public class GameController : MonoBehaviour {
     {
         GameObject cardObject = DeckManager.GetDeckManager.Draw();
         if (turn == 4) {
-            GetHandFactory.DrawCardToHand(MyHandObject, cardObject);
+            GetHandFactory.DrawCardToHand(MyHandObject, cardObject, true);
+            MyHandObject.GetComponent<HandManager>().AllowAllTrigger();
         } else {
-            GetHandFactory.DrawCardToHand(YourObjects[turn], cardObject);
+            GetHandFactory.DrawCardToHand(YourObjects[turn], cardObject, false);
+            YourObjects[turn].GetComponent<HandManager>().BlockAllTrigger();
         }
         ChangeTurn();
     }
@@ -82,7 +84,7 @@ class HandFactory {
         handManager.HandClass = handClass;
         handManager.HandObject = myHandObject;
         handManager.IsBack = false;
-        handManager.Width = 5;
+        handManager.Width = 1.2f;
         handManager.AllowAllTrigger();
         handManager.SetCardOrientation();
     }
@@ -94,12 +96,12 @@ class HandFactory {
         handManager.HandClass = handClass;
         handManager.HandObject = yourHandObject;
         handManager.IsBack = true;
-        handManager.Width = 2;
+        handManager.Width = 0.5f;
         handManager.BlockAllTrigger();
         handManager.SetCardOrientation();
     }
 
-    public void DrawCardToHand(GameObject handObject, GameObject cardObject) {
-        handObject.GetComponent<HandManager>().AddCard(cardObject);
+    public void DrawCardToHand(GameObject handObject, GameObject cardObject, bool isTrigger) {
+        handObject.GetComponent<HandManager>().AddCard(cardObject, isTrigger);
     }
 }

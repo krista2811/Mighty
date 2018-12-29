@@ -14,14 +14,14 @@ namespace BasicCard {
         public float Point { get; set; }
 
         public bool IsClicked { get; set; }
-        public bool IsHover { get; set; }
+        public bool IsSelected { get; set; }
 
         Sprite imageShow;
 
         public Card()
         {
             IsClicked = false;
-            IsHover = false;
+            IsSelected = false;
         }
 
         public bool Flip(bool isBack)

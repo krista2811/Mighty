@@ -9,8 +9,12 @@ public class CardManager : MonoBehaviour {
     public Card CardClass { get; set; }
     public GameObject CardImageObject { get; set; }
 
-    public Transform DefaultTransform { get; set; }
-    public Transform HoverTransform { get; set; }
+    public Vector3 DefaultPosition { get; set; }
+    public Vector3 HoverPosition { get; set; }
+
+    public HandManager GetHandManager { get; set; }
+
+    bool IsTrigger;
 
 	// Use this for initialization
 	void Start () {
@@ -19,21 +23,17 @@ public class CardManager : MonoBehaviour {
 	}
 
     public void SetPositionHovered() {
-        if (HoverTransform == null) {
-            HoverTransform = CardImageObject.transform;
-        }
-
         Vector3 newHoverVector = new Vector3();
-        newHoverVector.x = DefaultTransform.position.x;
-        newHoverVector.y = DefaultTransform.position.y + 0.4f;
-        newHoverVector.z = DefaultTransform.position.z;
-        HoverTransform.position = newHoverVector;
+        newHoverVector.x = HoverPosition.x;
+        newHoverVector.y = HoverPosition.y + 0.4f;
+        newHoverVector.z = HoverPosition.z - 1.0f;
+        HoverPosition = newHoverVector;
     }
 	
 	// Update is called once per frame
 	void Update () {
         //SetImageToCardObject();
-        if (CardClass.IsHover || CardClass.IsClicked)
+        if (CardClass.IsClicked)
         {
             MakeUp();
         }
@@ -58,36 +58,51 @@ public class CardManager : MonoBehaviour {
     }
 
     public void BlockTrigger() {
-        CardImageObject.GetComponent<BoxCollider2D>().isTrigger = false;
+        IsTrigger = false;
     }
 
     public void AllowTrigger() {
-        CardImageObject.GetComponent<BoxCollider2D>().isTrigger = true;
+        IsTrigger = true;
+    }
+
+    public void SetDown() {
+        CardClass.IsSelected = false;
+        CardClass.IsClicked = false;
+        MakeDown();
     }
 
     void MakeUp()
     {
-        CardImageObject.transform.position = HoverTransform.position;
+        CardImageObject.transform.localPosition = HoverPosition;
     }
 
     void MakeDown()
     {
-        CardImageObject.transform.position = DefaultTransform.position;
-    }
-
-    private void OnMouseEnter()
-    {
-        CardClass.IsHover = true;
-    }
-
-    private void OnMouseExit()
-    {
-        CardClass.IsHover = false;
+        CardImageObject.transform.localPosition = DefaultPosition;
     }
 
     private void OnMouseDown()
     {
-        ToggleCardIsClicked();
+        if (!IsTrigger) {
+            Debug.Log("Not Trigger Down!");
+            return;
+        }
+
+        if (CardClass.IsClicked)
+        {
+            CardClass.IsSelected = true;
+            Debug.Log("Selected");
+
+            // TODO: Set logic for selection!
+            CardClass.IsSelected = false;
+            CardClass.IsClicked = false;
+            MakeDown();
+        } else {
+            GetHandManager.OneCardClicked();
+            CardClass.IsClicked = true;
+            GetHandManager.HandObject = gameObject;
+        }
+        //ToggleCardIsClicked();
     }
 
 }
