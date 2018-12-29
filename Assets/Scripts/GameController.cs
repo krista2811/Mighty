@@ -50,7 +50,9 @@ public class GameController : MonoBehaviour {
 
     public void DrawAll()
     {
-
+        for (int i = 0; i < 50; i++) {
+            DrawOne();
+        }
     }
 
     public void DrawOne()
