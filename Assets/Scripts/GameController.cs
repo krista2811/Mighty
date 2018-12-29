@@ -89,7 +89,6 @@ class HandFactory {
 
     public void GenerateYourHand(GameObject yourHandObject)
     {
-        Debug.Log("THIS");
         Hand handClass = new Hand();
         HandManager handManager = yourHandObject.AddComponent<HandManager>();
         handManager.HandClass = handClass;

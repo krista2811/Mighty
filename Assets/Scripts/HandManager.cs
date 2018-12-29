@@ -30,6 +30,7 @@ public class HandManager : MonoBehaviour {
             return;
         }
         float spawnDistance = Width / count;
+        Debug.Log(spawnDistance);
 
         List<GameObject> cardObjects = HandClass.GetCardObjects();
 
@@ -40,13 +41,14 @@ public class HandManager : MonoBehaviour {
             cardObjects[i].transform.rotation = new Quaternion();
             cardObjects[i].transform.localScale = new Vector3(1, 1, 1);
 
-            Vector3 translate = new Vector3();
-            translate.x = -(Width / 2) + spawnDistance * i;
-            translate.y = 0;
-            translate.z = 0.01f * i;
+            Vector3 translate = new Vector3(
+                -(Width / 2) + (spawnDistance * i),
+                0,
+                0.01f * i
+            );
 
             cardObjects[i].transform.localPosition = translate;
-
+            
             // Set Hover
             cardObjects[i].GetComponent<CardManager>().DefaultTransform = cardObjects[i].transform;
             cardObjects[i].GetComponent<CardManager>().SetPositionHovered();
@@ -73,6 +75,7 @@ public class HandManager : MonoBehaviour {
 
     public void AddCard(GameObject oneCard)
     {
+        Debug.Log("ASDF");
         HandClass.AddCard(oneCard);
         SpawnCards();
     }
