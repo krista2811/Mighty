@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
     public static GameController GetGameController;
+
     public GameObject MyHandObject;
     public GameObject[] YourObjects;
 

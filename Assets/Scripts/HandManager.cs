@@ -114,4 +114,8 @@ public class HandManager : MonoBehaviour {
         // callback function in One Card Click!
         SetAllDown();
     }
+
+    public List<GameObject> GetCardObjects() {
+        return HandClass.GetCardObjects();
+    }
 }

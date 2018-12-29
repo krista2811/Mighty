@@ -8,6 +8,8 @@ public class DeckManager : MonoBehaviour
 {
     public static DeckManager GetDeckManager;
 
+    public GameObject DeckObject;
+
     public Sprite[] SapSprites;
     public Sprite[] ClSprites;
     public Sprite[] HaSprites;
@@ -67,11 +69,19 @@ public class DeckManager : MonoBehaviour
 
     Deck CreateDeck()
     {
-        List<GameObject> CardObjects;
-        CardObjects = cardFactory.GenerateAllCards();
+        Hand handClass = new Hand();
+        HandManager handManager = DeckObject.AddComponent<HandManager>();
+        handManager.HandClass = handClass;
+        handManager.HandObject = DeckObject;
+        handManager.IsBack = true;
+        handManager.Width = 0.01f;
+        handManager.BlockAllTrigger();
+        handManager.SetCardOrientation();
+
+        cardFactory.GenerateAllCards();
         return new Deck
         {
-            Cards = CardObjects
+            Cards = GetDeckHandManager().GetCardObjects()
         };
     }
 
@@ -94,6 +104,10 @@ public class DeckManager : MonoBehaviour
         GameObject DrawedCard = MyDeck.Pop();
         DrawedCard.SetActive(true);
         return DrawedCard;
+    }
+
+    public HandManager GetDeckHandManager() {
+        return DeckObject.GetComponent<HandManager>();
     }
 
 
@@ -135,35 +149,33 @@ class CardFactory
         };
     }
 
-    void AddOneSuit(Suit suit, List<GameObject> cardObjects)
+    void AddOneSuit(Suit suit)
     {
         for (int i = 0; i < 13; i++)
         {
             int suitIndex = (int)suit;
             GameObject OneCard = CreateOneCard(
                 SuitSprites[suitIndex][i], BackSprite, suit, SuitRanks[i], Job.NONE, SuitPoints[i]);
-            OneCard.SetActive(false);
-            cardObjects.Add(OneCard);
+            DeckManager.GetDeckManager.GetDeckHandManager().AddCard(OneCard, false);
+            //cardObjects.Add(OneCard);
         }
     }
 
-    public List<GameObject> GenerateAllCards()
+    public void GenerateAllCards()
     {
-        List<GameObject> NewCardDeck = new List<GameObject>();
-        AddOneSuit(Suit.SPADE, NewCardDeck);
-        AddOneSuit(Suit.DIAMOND, NewCardDeck);
-        AddOneSuit(Suit.HEART, NewCardDeck);
-        AddOneSuit(Suit.CLOVER, NewCardDeck);
+        AddOneSuit(Suit.SPADE);
+        AddOneSuit(Suit.DIAMOND);
+        AddOneSuit(Suit.HEART);
+        AddOneSuit(Suit.CLOVER);
 
         GameObject JokerObject = CreateOneCard(JokerSprite, BackSprite, Suit.NONE, Rank.ACE, Job.JOKER, -1);
-        JokerObject.SetActive(false);
-        NewCardDeck.Add(JokerObject);
+        DeckManager.GetDeckManager.GetDeckHandManager().AddCard(JokerObject, false);
 
         // set Mighty and Joker Call
-        ChangeJob(NewCardDeck, 12, Job.MIGHTY);
-        ChangeJob(NewCardDeck, 40, Job.JOKER_CALL);
+        ChangeJob(DeckManager.GetDeckManager.GetDeckHandManager().GetCardObjects(), 12, Job.MIGHTY);
+        ChangeJob(DeckManager.GetDeckManager.GetDeckHandManager().GetCardObjects(), 40, Job.JOKER_CALL);
 
-        return NewCardDeck;
+        return;
     }
 
     void ChangeJob(List<GameObject> cardObjects, int cardIndex, Job job)
@@ -181,9 +193,10 @@ class CardFactory
         OneCard.AddComponent<SpriteRenderer>();
         OneCardManager.CardClass = OneCardClass;
         OneCardManager.CardImageObject = OneCard;
+        
         OneCardManager.DefaultPosition = OneCard.transform.localPosition;
         OneCardManager.HoverPosition = OneCard.transform.localPosition;
-        OneCardManager.SetPositionHovered();
+        //OneCardManager.SetPositionHovered();
 
         // set Collider2D
         BoxCollider2D collider = OneCard.AddComponent<BoxCollider2D>();
