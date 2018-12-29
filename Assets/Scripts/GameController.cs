@@ -82,7 +82,7 @@ class HandFactory {
         handManager.HandClass = handClass;
         handManager.HandObject = myHandObject;
         handManager.IsBack = false;
-        handManager.Width = 10;
+        handManager.Width = 5;
         handManager.AllowAllTrigger();
         handManager.SetCardOrientation();
     }
@@ -94,7 +94,7 @@ class HandFactory {
         handManager.HandClass = handClass;
         handManager.HandObject = yourHandObject;
         handManager.IsBack = true;
-        handManager.Width = 5;
+        handManager.Width = 2;
         handManager.BlockAllTrigger();
         handManager.SetCardOrientation();
     }
