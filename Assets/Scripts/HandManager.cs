@@ -42,7 +42,6 @@ public class HandManager : MonoBehaviour {
             return;
         }
         float spawnDistance = Width * count;
-        Debug.Log(spawnDistance);
 
         List<GameObject> cardObjects = HandClass.GetCardObjects();
 
