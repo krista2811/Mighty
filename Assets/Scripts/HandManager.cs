@@ -10,7 +10,7 @@ public class HandManager : MonoBehaviour {
     public float Width { get; set; }
     public bool IsBack { get; set; }
 
-    public static GameObject SelectedCard { get; set; }
+    public GameObject SelectedCard { get; set; }
 
 	// Use this for initialization
 	void Start () {
@@ -113,6 +113,20 @@ public class HandManager : MonoBehaviour {
     public void OneCardClicked() {
         // callback function in One Card Click!
         SetAllDown();
+    }
+
+    public void PlayOneCard(GameObject cardObject)
+    {
+        Debug.Log("Played One Card");
+        // give GameController Played Card
+
+        // delete card object from HandClass.CardObjects
+        HandClass.RemoveCardObject(cardObject);
+
+        // need to delete this code
+        cardObject.SetActive(false);
+
+        SpawnCards();
     }
 
     public List<GameObject> GetCardObjects() {

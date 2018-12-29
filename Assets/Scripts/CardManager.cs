@@ -91,16 +91,13 @@ public class CardManager : MonoBehaviour {
         if (CardClass.IsClicked)
         {
             CardClass.IsSelected = true;
-            Debug.Log("Selected");
 
             // TODO: Set logic for selection!
-            CardClass.IsSelected = false;
-            CardClass.IsClicked = false;
-            MakeDown();
+            GetHandManager.PlayOneCard(gameObject);
         } else {
             GetHandManager.OneCardClicked();
             CardClass.IsClicked = true;
-            GetHandManager.HandObject = gameObject;
+            GetHandManager.SelectedCard = gameObject;
         }
         //ToggleCardIsClicked();
     }

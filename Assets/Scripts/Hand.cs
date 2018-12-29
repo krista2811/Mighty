@@ -23,6 +23,10 @@ public class Hand {
         return oneCard;
     }
 
+    public void RemoveCardObject(GameObject cardObject) {
+        CardObjects.Remove(cardObject);
+    }
+
     public int GetCardCount() {
         return CardObjects.Count;
     }
