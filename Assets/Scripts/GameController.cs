@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
+    public static bool IsGameOver;
     public static GameController GetGameController;
 
     public GameObject MyHandObject;
@@ -15,6 +16,8 @@ public class GameController : MonoBehaviour {
 
     private void Awake()
     {
+        IsGameOver = true;
+
         if (GetGameController == null) {
             GetGameController = this;
         } else if (GetGameController != this) {
@@ -30,8 +33,26 @@ public class GameController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
+        if (IsGameOver) {
+            return;
+        }
+
+        if (turn == 4) {
+            SetMyTurn();
+        } else {
+            NotMyTurn();
+        }
 	}
+
+    void SetMyTurn()
+    {
+        MyHandObject.GetComponent<HandManager>().AllowAllTrigger();
+    }
+
+    void NotMyTurn()
+    {
+        MyHandObject.GetComponent<HandManager>().BlockAllTrigger();
+    }
 
     public void ResetGame() {
         GenerateDeck();
@@ -41,6 +62,8 @@ public class GameController : MonoBehaviour {
         {
             GetHandFactory.GenerateYourHand(YourObjects[i]);
         }
+
+        IsGameOver = false;
     }
 
     public void GenerateDeck()
@@ -107,4 +130,5 @@ class HandFactory {
     public void DrawCardToHand(GameObject handObject, GameObject cardObject, bool isTrigger) {
         handObject.GetComponent<HandManager>().AddCard(cardObject, isTrigger);
     }
+
 }
