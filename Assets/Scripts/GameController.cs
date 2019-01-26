@@ -29,6 +29,9 @@ public class GameController : MonoBehaviour {
     void Start () {
         GetHandFactory = new HandFactory();
         turn = 4;  // 4 is me
+
+        HTTPManager hm = new HTTPManager();
+        hm.Test_GetPhase();
     }
 
     // Update is called once per frame
