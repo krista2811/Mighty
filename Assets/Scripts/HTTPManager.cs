@@ -4,11 +4,22 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class HTTPManager : MonoBehaviour {
+    public static HTTPManager GetHTTPManager;
+
     public delegate void Callback<T_param>(T_param param);
 
 
-	// Use this for initialization
-	void Start () {
+    private void Awake()
+    {
+        if (GetHTTPManager == null) {
+            GetHTTPManager = this;
+        } else if (GetHTTPManager != this) {
+            Destroy(gameObject);
+        }
+    }
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -22,6 +33,11 @@ public class HTTPManager : MonoBehaviour {
         yield return req.SendWebRequest();
 
         ResolveCallback(req, callback);
+    }
+
+    public void GetData() {
+        Callback<UnityWebRequest> callback = new Callback<UnityWebRequest>(Test_Callback);
+        StartCoroutine(Get(Api.GetGameData(), callback));
     }
 
     public void Test_GetPhase()
@@ -61,7 +77,11 @@ public static class Api {
         return host + "/" + func + "/" + sub;
     }
 
-     public static string GetGamePhase() {
+    public static string GetGamePhase() {
         return GenerateUri(G_HOST, GAME, "phase");
+    }
+
+    public static string GetGameData() {
+        return GenerateUri(G_HOST, GAME, "data");
     }
 }

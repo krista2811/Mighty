@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour {
     public static int turn;
 
     HandFactory GetHandFactory;
+    HTTPManager hm;
 
     private void Awake()
     {
@@ -30,7 +31,7 @@ public class GameController : MonoBehaviour {
         GetHandFactory = new HandFactory();
         turn = 4;  // 4 is me
 
-        HTTPManager hm = new HTTPManager();
+        hm = HTTPManager.GetHTTPManager;
         hm.Test_GetPhase();
     }
 
@@ -42,6 +43,7 @@ public class GameController : MonoBehaviour {
 
         if (turn == 4) {
             SetMyTurn();
+            hm.GetData();
         } else {
             NotMyTurn();
         }
